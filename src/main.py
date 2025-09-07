@@ -1,11 +1,25 @@
-from textnode import *
+import os
+import shutil
+from generate_pages import generate_pages_recursive
+
+def update_static():
+    
+    directory = os.listdir("public")
+    for file in directory:
+        if os.path.isfile(f"public/{file}"):
+            os.remove(f"public/{file}")
+        else:
+            shutil.rmtree(f"public/{file}")
+    directory = os.listdir("static")
+    shutil.copytree("static", "public", dirs_exist_ok=True)
+    generate_pages_recursive("content", "template.html", "public")
 
 def main():
-    a = TextNode("This is some link", "link", "not anymore")
-    b = TextNode("This is some link", "link")
-    print(a)
+    update_static()
+
 
 
 
 
 main()
+

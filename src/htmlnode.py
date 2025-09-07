@@ -40,18 +40,14 @@ class LeafNode(HTMLNode):
 
 
     def to_html(self):
-        if self.value == None:
-            raise Exception(ValueError)
-        if self.tag == None:
+        if self.value is None:
+            raise ValueError("invalid HTML: no value")
+        if self.tag is None:
             return self.value
-        string = "<" + self.tag
-        if self.props != None:
-            string += " " + super().props_to_html() #+ "\""
-        if self.tag != "img":
-            string += ">" + self.value + "</" + self.tag + ">"
-        else:
-            string += "/>"
-        return string
+        return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
+    
+    def __repr__(self):
+        return f"LeafNode({self.tag}, {self.value}, {self.props})"
 
 
 class ParentNode(HTMLNode):
@@ -60,15 +56,18 @@ class ParentNode(HTMLNode):
 
     def to_html(self):
         if self.tag == None:
-            raise Exception("No tag found: " + ValueError)
+            raise Exception("No tag found: ")
         if self.children == None:
-            raise Exception("No children found: " + ValueError)
+            raise Exception("No children found: ")
         string =  "<" + self.tag + ">"
         for child in self.children:
             string += child.to_html()
         string += "</" + self.tag + ">"
         return string
         
+    def __repr__(self):
+        return f"ParentNode({self.tag}, children: {self.children}, {self.props})"
+    
 def text_node_to_html_node(text_node):
     if text_node.text_type not in TextType:
         raise Exception(ValueError)
@@ -82,7 +81,7 @@ def text_node_to_html_node(text_node):
     elif text_node.text_type == TextType.CODE:
         return LeafNode("code", text_node.text)
     elif text_node.text_type == TextType.LINK:
-        return LeafNode("a", text_node.text, {"href": text_node.url})
+        return LeafNode("a", text_node.text, {" href": text_node.url})
     elif text_node.text_type == TextType.IMAGE:
         return LeafNode("img", "", {"src" : text_node.url,
                                     "alt" : text_node.text, })

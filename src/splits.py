@@ -111,13 +111,12 @@ def split_nodes_image(old_nodes):
 
 def text_to_textnodes(text):
     final_nodes = []
-    copy_text = text.text
     string = ""
     string2 = ""
     i = 0
     j = 0
     switch = 0
-    while i < len(text.text) -1:
+    while i < len(text.text):
         if text.text[i] == "_":
             j = i + 1
             string2 += text.text[i]
@@ -129,7 +128,7 @@ def text_to_textnodes(text):
                 nodes = split_nodes_delimiter(TextNode(string, TextType.TEXT), "_", TextType.ITALIC)
                 for node in nodes:
                     final_nodes.append(node)
-                i=j+1
+                i=j #+1
                 string = ""
                 string2 = ""
         elif text.text[i] == "`":
@@ -143,7 +142,7 @@ def text_to_textnodes(text):
                 nodes = split_nodes_delimiter(TextNode(string, TextType.TEXT), "`", TextType.CODE)
                 for node in nodes:
                     final_nodes.append(node)
-                i=j+1
+                i=j #+1
                 string = ""
                 string2 = ""
         elif text.text[i] == "*" and text.text[i+1] == "*":
@@ -159,7 +158,7 @@ def text_to_textnodes(text):
                 for node in nodes:
                     final_nodes.append(node)
                 
-                i=j
+                i=j-1 #+1
                 string = ""
                 string2 = ""
                 
@@ -183,7 +182,7 @@ def text_to_textnodes(text):
                 nodes = split_nodes_image(TextNode(string2, TextType.TEXT))
                 for node in nodes:
                     final_nodes.append(node)
-                i+=j
+                i+=j-1
                 string = ""
                 string2 = ""
         elif text.text[i] == "[":
@@ -206,13 +205,15 @@ def text_to_textnodes(text):
                 string = ""
                 string2 =""
                 i+=j-1
+        if i > len(text.text)-1:
+            print(final_nodes)
+            print(f"i = {i}")
         string += text.text[i]
         j = 0
         i+=1
-    #if string != "":
-    #    final_nodes.append(TextNode(string, TextType.TEXT))
-    #for node in final_nodes:
-    #    print(node)
+    if string != "":
+        final_nodes.append(TextNode(string, TextType.TEXT))
+   
     return final_nodes
 
 
