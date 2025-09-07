@@ -11,14 +11,14 @@ def generate_pages_recursive(from_path, template_path, dest_path, basepath):
             to_generate.append((f"content/{file}",file))
         elif os.path.isdir(f"content/{file}"):
             subdir = os.listdir(f"content/{file}")
-            os.mkdir(f"public/{file}")
+            os.mkdir(f"docs/{file}")
             for subfile in subdir:
                 if subfile[-3:] == ".md":
                     to_generate.append((f"content/{file}/{subfile}",file + "/" + subfile))
                 elif os.path.isdir(f"content/{file}/{subfile}"):
                     subsubdir = os.listdir(f"content/{file}/{subfile}")
-                    if not os.path.exists(f"public/{file}/{subfile}"):
-                        os.mkdir(f"public/{file}/{subfile}")
+                    if not os.path.exists(f"docs/{file}/{subfile}"):
+                        os.mkdir(f"docs/{file}/{subfile}")
                     for subsubfile in subsubdir:
                         print(subsubfile)
                         if subsubfile[-3:] == ".md":
