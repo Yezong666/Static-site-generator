@@ -18,8 +18,8 @@ def update_static():
 def main():
     update_static()
     basepath = "/"
-    if len(sys.argv) > 0:
-        basepath = sys.argv[0]
+    if len(sys.argv) > 1:
+        basepath = sys.argv[1]
     
     generate_pages_recursive("content", "template.html", "docs", basepath)
 
