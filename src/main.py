@@ -1,5 +1,6 @@
 import os
 import shutil
+import sys
 from generate_pages import generate_pages_recursive
 
 def update_static():
@@ -12,11 +13,15 @@ def update_static():
             shutil.rmtree(f"public/{file}")
     directory = os.listdir("static")
     shutil.copytree("static", "public", dirs_exist_ok=True)
-    generate_pages_recursive("content", "template.html", "public")
+    
 
 def main():
     update_static()
-
+    basepath = "/"
+    if len(sys.argv) > 0:
+        basepath = sys.argv[0]
+    
+    generate_pages_recursive("content", "template.html", "docs", basepath)
 
 
 

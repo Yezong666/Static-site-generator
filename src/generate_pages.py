@@ -1,7 +1,7 @@
 from markdown_blocks import extract_title, markdown_to_html_node
 import os
 
-def generate_pages_recursive(from_path, template_path, dest_path):
+def generate_pages_recursive(from_path, template_path, dest_path, basepath):
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
 
     directory = os.listdir("content")
@@ -39,6 +39,8 @@ def generate_pages_recursive(from_path, template_path, dest_path):
 
         template = template.replace("{{ Title }}", title)
         template = template.replace("{{ Content }}", html)
+        template = template.replace("href=\"/", f"href=\"{basepath}")
+        template = template.replace("src=\"/", f"src=\"{basepath}")
 
         #print(f"{dest_path}/{markdown[1][:-3]}.html")
         with open(f"{dest_path}/{markdown[1][:-3]}.html", "x") as f:
