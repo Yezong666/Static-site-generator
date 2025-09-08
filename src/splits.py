@@ -128,7 +128,7 @@ def text_to_textnodes(text):
                 nodes = split_nodes_delimiter(TextNode(string, TextType.TEXT), "_", TextType.ITALIC)
                 for node in nodes:
                     final_nodes.append(node)
-                i=j #+1
+                i=j +1
                 string = ""
                 string2 = ""
         elif text.text[i] == "`":
@@ -142,7 +142,7 @@ def text_to_textnodes(text):
                 nodes = split_nodes_delimiter(TextNode(string, TextType.TEXT), "`", TextType.CODE)
                 for node in nodes:
                     final_nodes.append(node)
-                i=j #+1
+                i=j +1
                 string = ""
                 string2 = ""
         elif text.text[i] == "*" and text.text[i+1] == "*":
@@ -158,7 +158,7 @@ def text_to_textnodes(text):
                 for node in nodes:
                     final_nodes.append(node)
                 
-                i=j-1 #+1
+                i=j
                 string = ""
                 string2 = ""
                 
@@ -205,10 +205,8 @@ def text_to_textnodes(text):
                 string = ""
                 string2 =""
                 i+=j-1
-        if i > len(text.text)-1:
-            print(final_nodes)
-            print(f"i = {i}")
-        string += text.text[i]
+        if i < len(text.text):
+            string += text.text[i]  
         j = 0
         i+=1
     if string != "":
